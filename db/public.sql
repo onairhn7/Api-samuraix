@@ -4,7 +4,7 @@ create table tbl_samurai
 (
     id serial primary key,
     nombre varchar (500),
-    ataque varchar (300),
+    ataque varchar (500),
     creado TIMESTAMP DEFAULT current_timestamp
 );
 
