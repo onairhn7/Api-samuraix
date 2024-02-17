@@ -17,16 +17,16 @@ const getSamurai = async (req,res)=>{
   const postSamurai = async (req,res)=>{
 
 
-    const {nombre, ataque} = req.body;
+    const {nombre, ataque, id_bando} = req.body;
    
  
-    const params = [nombre, ataque];
+    const params = [nombre, ataque, id_bando];
  
  
     const sql = `insert into tbl_samurai
-                 (nombre, ataque)
+                 (nombre, ataque, id_bando)
                  values
-                 ($1, $2) returning *`
+                 ($1, $2, $3) returning *`
  
      const result = await db.query(sql, params);
  
@@ -39,12 +39,13 @@ const getSamurai = async (req,res)=>{
 
  const putSamurai = async (req, res)=>{
 
-    const {nombre, ataque}=req.body
+    const {nombre, ataque, id_bando}=req.body
     const{id}=req.params
 
     const params=[
       nombre,
       ataque,
+      id_bando,
       id
     ]
 
@@ -52,7 +53,8 @@ const getSamurai = async (req,res)=>{
               set
                 nombre = $1,
                 ataque = $2
-               where id = $3 returning *`
+                id_bando =$3
+               where id = $4 returning *`
 
     const result = await db.query(sql,params)
     
