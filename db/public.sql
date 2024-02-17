@@ -1,18 +1,32 @@
 -- Active: 1705370176782@@localhost@5432@api_samuraix@public
 
+
+create table tbl_bando
+(
+    id serial primary key,
+    nombre varchar(200),
+    creado TIMESTAMP DEFAULT current_timestamp
+);
+
+
+
 create table tbl_samurai
 (
     id serial primary key,
     nombre varchar (500),
     ataque varchar (500),
+    id_bando int REFERENCES tbl_bando(id),
     creado TIMESTAMP DEFAULT current_timestamp
 );
 
-insert into tbl_samurai
-(nombre, ataque)
-values
-('kenchin', 'hiten'),
-('makoto', 'mugen'),
-('sanosuke', 'punio')
+create table tbl_estiloPelea
+(
+    id serial primary key,
+    nombre_estilo varchar (300),
+    poder_estilo numeric,
+    fehca_union TIMESTAMP DEFAULT current_timestamp
+);
+
+
 
 select * from tbl_samurai
