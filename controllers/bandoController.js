@@ -3,6 +3,7 @@ import {db} from '../db/conn.js';
 const getBando = async (req,res)=>{
 
     const sql = `select * from tbl_bando`;
+
     const result = await db.query(sql);
 
     res.json(result);

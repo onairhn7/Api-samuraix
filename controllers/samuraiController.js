@@ -4,7 +4,13 @@ import {db} from '../db/conn.js'
 
 const getSamurai = async (req,res)=>{
 
-    const sql = `select * from tbl_samurai order by id`;
+    const sql = `select a.id,
+    a.nombre as nombre_samurai,
+    a.ataque,
+    b.nombre as nombre_bando
+    from tbl_samurai a 
+    inner join tbl_bando b 
+    on a.id_bando=b.id`;
   
     const result = await db.query(sql);
   

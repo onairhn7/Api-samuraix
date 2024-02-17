@@ -28,6 +28,13 @@ create table tbl_estiloPelea
 );
 
 
+select a.id,
+    a.nombre as nombre_samurai,
+    a.ataque,
+    b.nombre as nombre_bando
+    from tbl_samurai a 
+    inner join tbl_bando b 
+    on a.id_bando=b.id
 
 
 
