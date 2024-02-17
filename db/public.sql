@@ -4,7 +4,7 @@
 create table tbl_bando
 (
     id serial primary key,
-    nombre varchar(200),
+    nombre varchar(500),
     creado TIMESTAMP DEFAULT current_timestamp
 );
 
@@ -24,8 +24,10 @@ create table tbl_estiloPelea
     id serial primary key,
     nombre_estilo varchar (300),
     poder_estilo numeric,
-    fehca_union TIMESTAMP DEFAULT current_timestamp
+    fecha_union TIMESTAMP DEFAULT current_timestamp
 );
+
+
 
 
 

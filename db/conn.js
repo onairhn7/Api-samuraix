@@ -1,8 +1,18 @@
 import pg from 'pg-promise';
 
+import dotenv from 'dotenv';
+
+dotenv.config();
+
 const pgp = pg()
 
-const cnstr = `postgresql://postgres:N1706e18ls.@localhost:5432/api_samuraix`;
+const user= process.env.USER;
+const pass= process.env.PASS;
+const dataBase = process.env.DATABASE;
+const host= process.env.HOST;
+const portDb= process.env.PORT_DB;
+
+const cnstr = `postgresql://${user}:${pass}@${host}:${portDb}/${dataBase}`;
 
 
 const db = pgp (cnstr);
