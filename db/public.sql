@@ -16,6 +16,8 @@ create table tbl_samurai
     nombre varchar (500),
     ataque varchar (500),
     id_bando int REFERENCES tbl_bando(id),
+    id_estilo int REFERENCES tbl_estiloPelea(id),
+    id_sexo int REFERENCES tbl_sexo (id),
     creado TIMESTAMP DEFAULT current_timestamp
 );
 
@@ -27,6 +29,17 @@ create table tbl_estiloPelea
     fecha_union TIMESTAMP DEFAULT current_timestamp
 );
 
+create table tbl_espada
+(
+    id serial primary key,
+    nombre_espada varchar (300)
+)
+
+create table tbl_sexo
+(
+    id serial primary key,
+    sexo varchar (100)
+)
 
 select a.id,
     a.nombre as nombre_samurai,
@@ -35,7 +48,6 @@ select a.id,
     from tbl_samurai a 
     inner join tbl_bando b 
     on a.id_bando=b.id
-
 
 
 select * from tbl_samurai
