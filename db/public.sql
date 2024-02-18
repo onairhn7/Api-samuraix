@@ -25,7 +25,6 @@ create table tbl_estiloPelea
 (
     id serial primary key,
     nombre_estilo varchar (300),
-    poder_estilo numeric,
     fecha_union TIMESTAMP DEFAULT current_timestamp
 );
 
@@ -48,6 +47,5 @@ select a.id,
     from tbl_samurai a 
     inner join tbl_bando b 
     on a.id_bando=b.id
-
 
 select * from tbl_samurai
