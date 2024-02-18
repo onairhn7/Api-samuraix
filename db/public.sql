@@ -1,5 +1,6 @@
 -- Active: 1705370176782@@localhost@5432@api_samuraix@public
 
+drop table tbl_samurai;
 
 create table tbl_bando
 (
@@ -16,7 +17,7 @@ create table tbl_samurai
     nombre varchar (500),
     ataque varchar (500),
     id_bando int REFERENCES tbl_bando(id),
-    id_estilo int REFERENCES tbl_estiloPelea(id),
+    id_estiloPelea int REFERENCES tbl_estiloPelea(id),
     id_sexo int REFERENCES tbl_sexo (id),
     creado TIMESTAMP DEFAULT current_timestamp
 );
@@ -50,5 +51,40 @@ select a.id,
 
 
 delete from tbl_estiloPelea where id is not null;
+
+SELECT
+  a.id,
+  a.nombre AS nombre_samurai,
+  a.ataque,
+  b.nombre AS nombre_bando,
+  e.nombre_estilo AS nombre_estilo_pelea,
+  s.sexo AS nombre_sexo
+FROM
+  "public"."tbl_samurai" a
+INNER JOIN
+  "public"."tbl_bando" b ON a.id_bando = b.id
+INNER JOIN
+  "public"."tbl_estiloPelea" e ON a.id_estiloPelea = e.id
+INNER JOIN
+  "public"."tbl_sexo" s ON a.id_sexo = s.id;
+
+
+SELECT table_name FROM information_schema.tables WHERE table_name = 'tbl_estiloPelea';
+
+
+
+  INSERT INTO tbl_samurai (nombre, ataque, id_bando, id_estiloPelea, id_sexo)
+VALUES ($1, $2, $3, $4, $5)
+RETURNING *;
+
+
+
+SELECT table_name FROM information_schema.tables WHERE table_name = 'tbl_samurai';
+
+
+SELECT table_name, table_schema FROM information_schema.tables WHERE table_name = 'tbl_samurai';
+
+SELECT table_name, table_schema FROM information_schema.tables WHERE table_name = 'tbl_samurai';
+
 
 select * from tbl_samurai

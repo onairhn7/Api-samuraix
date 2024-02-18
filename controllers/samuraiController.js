@@ -4,13 +4,22 @@ import {db} from '../db/conn.js'
 
 const getSamurai = async (req,res)=>{
 
-    const sql = `select a.id,
-    a.nombre as nombre_samurai,
+    const sql = `
+  SELECT
+    a.id,
+    a.nombre AS nombre_samurai,
     a.ataque,
-    b.nombre as nombre_bando
-    from tbl_samurai a 
-    inner join tbl_bando b 
-    on a.id_bando=b.id`;
+    b.nombre AS nombre_bando,
+    e.nombre_estilo AS nombre_estilo_pelea,
+    s.sexo AS nombre_sexo
+  FROM
+    tbl_samurai a
+  INNER JOIN
+    tbl_bando b ON a.id_bando = b.id
+  INNER JOIN
+    tbl_estilopelea e ON a.id_estilo = e.id
+  INNER JOIN
+    tbl_sexo s ON a.id_sexo = s.id;`;
   
     const result = await db.query(sql);
   
@@ -23,16 +32,15 @@ const getSamurai = async (req,res)=>{
   const postSamurai = async (req,res)=>{
 
 
-    const {nombre, ataque, id_bando, id_sexo, id_estilo} = req.body;
-   
- 
-    const params = [nombre, ataque, id_bando, id_sexo, id_estilo];
- 
- 
-    const sql = `insert into tbl_samurai
-                 (nombre, ataque, id_bando, id_estilo, id_sexo)
-                 values
-                 ($1, $2, $3, $4, $5) returning *`
+    const {nombre, ataque, id_bando, id_sexo, id_estiloPelea} = req.body;
+
+const params = [nombre, ataque, id_bando, id_sexo, id_estiloPelea];
+
+const sql = `insert into tbl_samurai
+             (nombre, ataque, id_bando, id_estiloPelea, id_sexo)
+             values
+             ($1, $2, $3, $4, $5) returning *`
+
  
      const result = await db.query(sql, params);
  
@@ -45,14 +53,14 @@ const getSamurai = async (req,res)=>{
 
  const putSamurai = async (req, res)=>{
 
-    const {nombre, ataque, id_bando, id_estilo, id_sexo}=req.body
+    const {nombre, ataque, id_bando, id_estiloPelea, id_sexo}=req.body
     const{id}=req.params
 
     const params=[
       nombre,
       ataque,
       id_bando,
-      id_estilo,
+      id_estiloPelea,
       id_sexo,
       id
     ]
@@ -62,7 +70,7 @@ const getSamurai = async (req,res)=>{
                 nombre = $1,
                 ataque = $2,
                 id_bando =$3,
-                id_estilo =$4,
+                id_estiloPelea =$4,
                 id_sexo =$5,
                where id = $6 returning *`
 
