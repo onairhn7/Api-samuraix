@@ -48,4 +48,7 @@ select a.id,
     inner join tbl_bando b 
     on a.id_bando=b.id
 
+
+delete from tbl_estiloPelea where id is not null;
+
 select * from tbl_samurai

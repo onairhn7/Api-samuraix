@@ -11,9 +11,9 @@ const getEstilo = async (req,res)=>{
 
 const postEstilo = async(req,res) =>{
 
-    const {nombre} = req.body;
+    const {nombre_estilo} = req.body;
 
-    const params = [nombre];
+    const params = [nombre_estilo];
 
     const sql=`insert into tbl_estiloPelea 
     (nombre_estilo)
