@@ -90,13 +90,10 @@ SELECT table_name, table_schema FROM information_schema.tables WHERE table_name 
 select * from tbl_samurai
 
 
-UPDATE tbl_samurai
-        SET
-            nombre = $1,
-            ataque = $2,
-            id_bando = $3,
-            id_estiloPelea = $4,
-            id_sexo = $5
-        WHERE
-            id = $6
-        RETURNING *
+ nombre = $1,
+                ataque = $2,
+                id_bando =$3,
+                id_estilo =$4,
+                id_estiloPelea =$4,
+                id_sexo =$5,
+               where id = $6 returning *

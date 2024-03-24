@@ -64,18 +64,17 @@ const putSamurai = async (req, res) => {
   const { id } = req.params;
   const params = [nombre, ataque, id_bando, id_estiloPelea, id_sexo, id];
   const sql = `
-      UPDATE tbl_samurai
-      SET
-          nombre = $1,
-          ataque = $2,
-          id_bando = $3,
-          id_estiloPelea = $4,
-          id_sexo = $5
-      WHERE
-          id = $6
-      RETURNING *`;
-  const result = await db.query(sql, params);
-  res.json(result.rows[0]);
+  nombre = $1,
+  ataque = $2,
+  id_bando =$3,
+  id_estilo =$4,
+  id_estiloPelea =$4,
+  id_sexo =$5,
+ where id = $6 returning *`;
+ 
+ const result = await db.query(sql,params)
+    
+ res.json(result);
 }
 
 
