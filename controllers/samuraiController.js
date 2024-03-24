@@ -1,10 +1,10 @@
 
-import {db} from '../db/conn.js'
+import { db } from '../db/conn.js'
 
 
-const getSamurai = async (req,res)=>{
+const getSamurai = async (req, res) => {
 
-    const sql = `
+  const sql = `
   SELECT
     a.id,
     a.nombre AS nombre_samurai,
@@ -20,38 +20,46 @@ const getSamurai = async (req,res)=>{
     tbl_estilopelea e ON a.id_estilo = e.id
   INNER JOIN
     tbl_sexo s ON a.id_sexo = s.id;`;
-  
-    const result = await db.query(sql);
-  
-    res.json(result)
-  
-  
-  }
+
+  const result = await db.query(sql);
+
+  res.json(result)
 
 
-  const postSamurai = async (req,res)=>{
+}
 
 
-    const {nombre, ataque, id_bando, id_sexo, id_estiloPelea} = req.body;
+const postSamurai = async (req, res) => {
 
-const params = [nombre, ataque, id_bando, id_sexo, id_estiloPelea];
+  try {
+    const { nombre, ataque, id_bando, id_sexo, id_estiloPelea } = req.body;
 
-const sql = `insert into tbl_samurai
+  const params = [nombre, ataque, id_bando, id_sexo, id_estiloPelea];
+
+  const sql = `insert into tbl_samurai
              (nombre, ataque, id_bando, id_estiloPelea, id_sexo)
              values
              ($1, $2, $3, $4, $5) returning *`
 
- 
-     const result = await db.query(sql, params);
- 
-     res.json(result);
- 
- 
-    
- 
- }
 
- const putSamurai = async (req, res) => {
+  const result = await db.query(sql, params);
+  res.status(200).json(result);
+
+  } catch (err){
+
+    res.status(500).json(err);
+
+  }
+  
+
+  
+
+
+
+
+}
+
+const putSamurai = async (req, res) => {
   const { nombre, ataque, id_bando, id_estiloPelea, id_sexo } = req.body;
   const { id } = req.params;
   const params = [nombre, ataque, id_bando, id_estiloPelea, id_sexo, id];
@@ -71,19 +79,19 @@ const sql = `insert into tbl_samurai
 }
 
 
-const deleteSamurai = async (req,res)=>{
+const deleteSamurai = async (req, res) => {
 
-    const params = [req.params.id];
-  
-    const sql = `delete from tbl_samurai where id = $1 returning *`;
-  
-    const result = await db.query(sql,params);
-  
-  
-    res.json(result);
-  
-  
-  
-  }
+  const params = [req.params.id];
 
-  export {getSamurai, postSamurai, putSamurai, deleteSamurai};
+  const sql = `delete from tbl_samurai where id = $1 returning *`;
+
+  const result = await db.query(sql, params);
+
+
+  res.json(result);
+
+
+
+}
+
+export { getSamurai, postSamurai, putSamurai, deleteSamurai };
