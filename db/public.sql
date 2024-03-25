@@ -13,14 +13,18 @@ create table tbl_bando
 
 create table tbl_samurai
 (
-    id serial primary key,
-    nombre varchar (500),
-    ataque varchar (500),
-    id_bando int REFERENCES tbl_bando(id),
-    id_estiloPelea int REFERENCES tbl_estiloPelea(id),
-    id_sexo int REFERENCES tbl_sexo (id),
-    creado TIMESTAMP DEFAULT current_timestamp
+    id serial PRIMARY KEY,
+    nombre varchar(500),
+    ataque varchar(500),
+    id_bando int,
+    id_estilo_pelea int,
+    id_sexo int,
+    creado TIMESTAMP DEFAULT current_timestamp,
+    constraint fk_id_bando FOREIGN key (id_bando) REFERENCES tbl_bando (id),
+    constraint fk_id_estiloPelea FOREIGN key (id_estilo_pelea) REFERENCES tbl_estiloPelea (id),  -- Corrección aquí
+    constraint fk_id_sexo FOREIGN key (id_sexo) REFERENCES tbl_sexo (id)
 );
+
 
 create table tbl_estiloPelea
 (
@@ -38,7 +42,8 @@ create table tbl_espada
 create table tbl_sexo
 (
     id serial primary key,
-    sexo varchar (100)
+    sexo varchar (100),
+    fotoPerfil VARCHAR(255)
 )
 
 select a.id,
@@ -90,10 +95,18 @@ SELECT table_name, table_schema FROM information_schema.tables WHERE table_name 
 select * from tbl_samurai
 
 
- nombre = $1,
-                ataque = $2,
-                id_bando =$3,
-                id_estilo =$4,
-                id_estiloPelea =$4,
-                id_sexo =$5,
-               where id = $6 returning *
+SELECT
+  a.id,
+  a.nombre AS nombre_samurai,
+  a.ataque,
+  b.nombre AS nombre_bando,
+  e.nombre AS nombre_estilo_pelea,
+  s.sexo AS nombre_sexo
+FROM
+  tbl_samurai a
+INNER JOIN
+  tbl_bando b ON a.id_bando = b.id
+INNER JOIN
+  tbl_estilopelea e ON a.id_estilo_pelea = e.id
+INNER JOIN
+  tbl_sexo s ON a.id_sexo = s.id;

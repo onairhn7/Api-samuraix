@@ -5,27 +5,29 @@ import { db } from '../db/conn.js'
 const getSamurai = async (req, res) => {
 
   const sql = `
-  SELECT
-    a.id,
-    a.nombre AS nombre_samurai,
-    a.ataque,
-    b.nombre AS nombre_bando,
-    e.nombre_estilo AS nombre_estilo_pelea,
-    s.sexo AS nombre_sexo
-  FROM
-    tbl_samurai a
-  INNER JOIN
-    tbl_bando b ON a.id_bando = b.id
-  INNER JOIN
-    tbl_estilopelea e ON a.id_estilo = e.id
-  INNER JOIN
-    tbl_sexo s ON a.id_sexo = s.id;`;
+    SELECT
+      a.id,
+      a.nombre AS nombre_samurai,
+      a.ataque,
+      b.nombre AS nombre_bando,
+      e.nombre AS nombre_estilo_pelea,
+      s.sexo AS nombre_sexo
+    FROM
+      tbl_samurai a
+    INNER JOIN
+      tbl_bando b ON a.id_bando = b.id
+    INNER JOIN
+      tbl_estilopelea e ON a.id_estilo_pelea = e.id
+    INNER JOIN
+      tbl_sexo s ON a.id_sexo = s.id;`;
 
-  const result = await db.query(sql);
-
-  res.json(result)
-
-
+  try {
+    const result = await db.query(sql);
+    res.json(result);
+  } catch (error) {
+    console.error('Error al obtener los datos de los samuráis:', error);
+    res.status(500).json({ message: 'Error al obtener los datos de los samuráis' });
+  }
 }
 
 
@@ -45,11 +47,10 @@ const postSamurai = async (req, res) => {
   const result = await db.query(sql, params);
   res.status(200).json(result);
 
-  } catch (err){
-
-    res.status(500).json(err);
-
-  }
+  } catch (error) {
+  console.error('Error al obtener los datos de los samuráis:', error);
+  res.status(500).json({ message: 'Error al obtener los datos de los samuráis', error: error.message });
+}
   
 
   
